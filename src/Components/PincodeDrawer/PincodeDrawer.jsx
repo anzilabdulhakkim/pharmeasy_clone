@@ -1,23 +1,10 @@
 import React, { useRef, useState } from "react";
-import {
-  Drawer,
-  DrawerBody,
-  DrawerHeader,
-  DrawerOverlay,
-  DrawerContent,
-  DrawerCloseButton,
-  useDisclosure,
-  Button,
-  Input,
-  InputGroup,
-  InputRightElement,
-  Stack,
-  Box,
-} from "@chakra-ui/react";
+import { Drawer, DrawerBody, DrawerHeader, DrawerOverlay, DrawerContent, DrawerCloseButton, useDisclosure, Button, Input, InputGroup, InputRightElement, Stack, Box,} from "@chakra-ui/react";
 import styles from "./pdrawer.module.css";
 import { FcHome, FcShipped, FcTodoList } from "react-icons/fc";
 import axios from "axios";
 
+// Data for Drawer content
 const data = [
   {
     icon: <FcHome style={{ width: "40px", height: "40px" }} />,
@@ -50,53 +37,46 @@ const PincodeDrawer = () => {
   const [text, setText] = useState("Select Pincode");
 
   const searchCity = async () => {
-    let res = await axios.get(`https://api.postalpincode.in/pincode/${pin}`);
-    onClose();
-    setText(`${pin} ${res.data[0].PostOffice[0].District}`);
-    console.log(res.data[0].PostOffice[0].District);
+    try {
+      const res = await axios.get(`https://api.postalpincode.in/pincode/${pin}`);
+      const district = res.data[0].PostOffice[0].District;
+      setText(`${pin} ${district}`);
+      console.log(district);
+      onClose();
+    } 
+    catch (error) {
+      console.error("Error fetching PIN code details:", error);
+      alert("Invalid Pincode");
+    }
   };
 
   return (
     <div>
-      {text === "Select Pincode" ? (
-        <Button
-          ref={btnRef}
-          color="gray.700"
-          onClick={onOpen}
-          variant="ghost"
-          bg="white"
-          height="40px"
-          borderTopEndRadius="none"
-          borderBottomEndRadius="none"
-          _hover="none"
-        >
-          {text}
-        </Button>
-      ) : (
-        <Button
-          ref={btnRef}
-          color="#30363c"
-          onClick={onOpen}
-          variant="ghost"
-          bg="white"
-          height="40px"
-          fontSize={"14px"}
-          noOfLines={2}
-          borderTopEndRadius="none"
-          borderBottomEndRadius="none"
-          _hover="none"
-          textAlign="left"
-          fontWeight={"500"}
-        >
-          <span
-            style={{ fontSize: "12px", color: "#4F585E", fontWeight: "400" }}
-          >
-            Delivery to
-          </span>
-          <br />
-          {text}
-        </Button>
-      )}
+      <Button
+        ref={btnRef}
+        color={text === "Select Pincode" ? "gray.700" : "#30363c"}
+        onClick={onOpen}
+        variant="ghost"
+        bg="white"
+        height="40px"
+        fontSize={text === "Select Pincode" ? "inherit" : "14px"}
+        noOfLines={2}
+        borderTopEndRadius="none"
+        borderBottomEndRadius="none"
+        _hover="none"
+        textAlign="left"
+        fontWeight="500"
+      >
+        {text === "Select Pincode" ? text : (
+          <>
+            <span style={{ fontSize: "12px", color: "#4F585E", fontWeight: "400" }}>
+              Delivery to
+            </span>
+            <br />
+            {text}
+          </>
+        )}
+      </Button>
       <Drawer
         isOpen={isOpen}
         placement="right"

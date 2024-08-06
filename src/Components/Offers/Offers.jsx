@@ -1,16 +1,4 @@
-import {
-  Box,
-  Button,
-  Flex,
-  Heading,
-  Input,
-  InputGroup,
-  InputLeftElement,
-  InputRightElement,
-  Stack,
-  Text,
-  VStack,
-} from "@chakra-ui/react";
+import { Box, Button, Flex, Heading, Input, InputGroup, InputLeftElement, InputRightElement, Stack, Text, VStack,} from "@chakra-ui/react";
 import React, { useState } from "react";
 import { OffersData } from "./OffersData";
 import styles from "./offers.module.css";
@@ -24,23 +12,26 @@ const Offers = () => {
   const [query, setQuery] = useState("");
   const [show, setShow] = useState(false);
   const [data, setData] = useState([]);
+  const backendUrl = process.env.BACKEND_URL;
 
   const handleChange = async (e) => {
-    if (e.target.value === "") {
-      return setShow(false);
+    const value = e.target.value;
+    setQuery(value);
+
+    if (value === "") {
+      setShow(false);
+      return;
     }
-    setQuery(e.target.value);
+
     setShow(true);
-    let res = await axios.get(
-      `https://pharmeasy-backend.onrender.com/products?name=${e.target.value}`
-    );
-    setData(res.data);
+    try {
+      const res = await axios.get(`${backendUrl}/products?name=${value}`);
+      setData(res.data);
+    } catch (error) {
+      console.error("Error fetching data:", error);
+    }
   };
 
-  const element = document.querySelector("#box");
-  console.log(element);
-
-  // if()
   return (
     <div>
       <div className={styles.backColor}>
@@ -48,7 +39,6 @@ const Offers = () => {
           width={"60%"}
           margin="auto"
           paddingTop="32px"
-          // marginBottom={"40px"}
           gap="15px"
         >
           <Flex justifyContent={"space-between"}>
@@ -89,14 +79,13 @@ const Offers = () => {
           </InputGroup>
         </Stack>
       </div>
-      {show ? (
+      {show && (
         <div
           style={{
             position: "relative",
             width: "100%",
             zIndex: "1000",
             backgroundColor: "white",
-            // border:"1px solid #EEF4FF"
           }}
         >
           <Box
@@ -109,7 +98,7 @@ const Offers = () => {
             marginLeft="290px"
             overflowY="scroll"
             borderTop={"none"}
-            id="#box"
+            id="box"
           >
             <VStack>
               <Box
@@ -155,7 +144,7 @@ const Offers = () => {
             </VStack>
           </Box>
         </div>
-      ) : null}
+      )}
       <div className={styles.container}>
         <Stack
           direction="horizontal"
