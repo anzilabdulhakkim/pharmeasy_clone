@@ -39,7 +39,7 @@ const Products = () => {
     const getData = async () => {
       setLoading(true);
       let res = await axios.get(
-        `https://pharmeasy-backend.onrender.com/products?category=${category}`
+        `${process.env.BACKEND_URL}/products?category=${category}`
       );
       setData(res.data);
       setLoading(false);

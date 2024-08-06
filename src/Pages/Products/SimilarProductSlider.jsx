@@ -27,11 +27,11 @@ const  SimilarProductSlider = () => {
     const side = useBreakpointValue({ base: "30%", md: "10px" });
 
     
-useEffect(()=>{
-    axios
-    .get("https://pharmeasy-backend.onrender.com/products/")
-    .then((res)=> setProductData(res.data))
-},[])
+    useEffect(() => {
+        axios
+            .get(`${process.env.BACKEND_URL}/products/`)
+            .then((res) => setProductData(res.data));
+    }, []);
 
 
     return (

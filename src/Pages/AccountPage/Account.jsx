@@ -1,36 +1,47 @@
-import React from 'react'
-import styles from "./account.module.css"
-import { BsFillHandbagFill } from "react-icons/bs"
-import { HiFolder } from "react-icons/hi"
-import { BsFillPersonFill } from "react-icons/bs"
-import { IoMdWallet } from "react-icons/io"
-import { MdCardGiftcard } from "react-icons/md"
-import { AiOutlineLogout } from "react-icons/ai"
-import {MdAccountCircle} from "react-icons/md"
+import React, { useState } from 'react';
+import styles from "./account.module.css";
+import { BsFillHandbagFill } from "react-icons/bs";
+import { HiFolder } from "react-icons/hi";
+import { BsFillPersonFill } from "react-icons/bs";
+import { IoMdWallet } from "react-icons/io";
+import { MdCardGiftcard } from "react-icons/md";
+import { AiOutlineLogout } from "react-icons/ai";
+import { MdAccountCircle } from "react-icons/md";
 import AppSection from '../Products/AppSection';
-import {useState,useEffect} from 'react'
 import axios from "axios";
-const Account = () => {
-   const [updata,upsetdata]=useState(JSON.parse(localStorage.getItem('userdetail'))||{});
-   const [userdata,setuserdata]=useState({email:updata.email});
-   async function handlesave(event){
-    event.preventDefault();
-    console.log(userdata)
-    let update = await axios.post("https://pharmeasy-backend.onrender.com/updateUser", userdata);
-    console.log(update);
-    localStorage.setItem('userdetail',JSON.stringify(userdata));
-    window.location.reload(true)
-   }
 
+const backendUrl = process.env.BACKEND_URL
+
+const Account = () => {
+  const [updata, upsetdata] = useState(JSON.parse(localStorage.getItem('userdetail')) || {});
+  const [userdata, setuserdata] = useState({ email: updata.email });
+
+  async function handlesave(event) {
+    event.preventDefault();
+    console.log(userdata);
+    try {
+      let update = await axios.post(`${backendUrl}/users/updateUser`, userdata);
+      console.log(update);
+      if (update.status === 200) {
+        localStorage.setItem('userdetail', JSON.stringify(userdata));
+        window.location.reload(true);
+      } else {
+        alert(update.data.errormsg);
+      }
+    } catch (error) {
+      console.error("Error updating user:", error);
+      alert("Something went wrong. Please try again.");
+    }
+  }
 
   return (
     <>
       <div className={styles.maindiv}>
         <div className={styles.leftdiv}>
-          <div style ={{display:"flex", marginBottom:"10px", alignItems:"center"}}>
-            <div>{<MdAccountCircle className ={styles.accountIcon} />}</div>
-            <div className={styles.subheading}>{updata.username?updata.username:'user'}</div>
-            </div>
+          <div style={{ display: "flex", marginBottom: "10px", alignItems: "center" }}>
+            <div>{<MdAccountCircle className={styles.accountIcon} />}</div>
+            <div className={styles.subheading}>{updata.username ? updata.username : 'user'}</div>
+          </div>
           <div className={styles.leftmain}>
             <div className={styles.ordersDiv}>
               <div className={styles.orderSubdiv1}>
@@ -54,7 +65,6 @@ const Account = () => {
                 <div className={styles.leftdivSubheading}>MEDICAL RECORDS</div>
               </div>
               <div className={styles.leftsubunder}>All</div>
-
             </div>
             <div className={styles.ordersDiv}>
               <div className={styles.orderSubdiv1}>
@@ -84,33 +94,31 @@ const Account = () => {
               </div>
             </div>
           </div>
-
-
         </div>
         <div className={styles.rightdiv}>
-          <div className={styles.subheading}>EDIT PROFILE</div><br/>
+          <div className={styles.subheading}>EDIT PROFILE</div><br />
           <div className={styles.rightmain}>
             <form className={styles.form}>
               <div>
-                <label for="name">
+                <label htmlFor="name">
                   <span className={styles.spanName}>Name</span>
                   <span className={styles.star}>*</span>
                 </label>
                 <div className={styles.inputdiv}>
-                  <input type="text" placeholder={updata.username?updata.username:"Enter your name"} onChange={(e)=>setuserdata({...userdata,username:e.target.value})} className={styles.input} />
+                  <input type="text" placeholder={updata.username ? updata.username : "Enter your name"} onChange={(e) => setuserdata({ ...userdata, username: e.target.value })} className={styles.input} />
                 </div>
               </div>
               <div>
-                <label for="mobilenumber">
+                <label htmlFor="mobilenumber">
                   <span className={styles.spanName}>Mobile Number</span>
                   <span className={styles.star}>*</span>
                 </label>
                 <div className={styles.inputdiv}>
-                  <input type="number" placeholder={updata.number?updata.number:"Enter you number"} onChange={(e)=>setuserdata({...userdata,number:Number(e.target.value)})} className={styles.input} />
+                  <input type="number" placeholder={updata.number ? updata.number : "Enter your number"} onChange={(e) => setuserdata({ ...userdata, number: Number(e.target.value) })} className={styles.input} />
                 </div>
               </div>
               <div>
-                <label for="email">
+                <label htmlFor="email">
                   <span className={styles.spanName}>Email</span>
                   <span className={styles.star}>*</span>
                 </label>
@@ -118,16 +126,14 @@ const Account = () => {
                   <input type="text" value={updata.email} disabled={true} className={styles.input} />
                 </div>
               </div>
-
-              <button className={styles.savebutton} onClick={handlesave} >SAVE</button>
+              <button className={styles.savebutton} onClick={handlesave}>SAVE</button>
             </form>
           </div>
         </div>
       </div>
-     <AppSection/>
+      <AppSection />
     </>
+  );
+};
 
-  )
-}
-
-export default Account
+export default Account;

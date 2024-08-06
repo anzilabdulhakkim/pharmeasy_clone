@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import CartItem from "../../Components/CartItem";
 import styles from "./cart.module.css";
 import CartSwiper from "../../Components/CartSwiper.jsx";
-import { Button, Flex } from "@chakra-ui/react";
+import { Button} from "@chakra-ui/react";
 import ChevronRight from "@mui/icons-material/ChevronRight";
 import Box from "@mui/material/Box";
 import { HiCurrencyRupee } from "react-icons/hi";

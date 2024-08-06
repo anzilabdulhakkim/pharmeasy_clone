@@ -1,13 +1,4 @@
-import {
-  Box,
-  Button,
-  Center,
-  Flex,
-  IconButton,
-  Image,
-  Text,
-  Select,
-} from "@chakra-ui/react";
+import { Box, Button, Center, Flex, IconButton, Image, Text,} from "@chakra-ui/react";
 import styles from "./product.module.css";
 import React, { useEffect, useState } from "react";
 import { FaShareAlt } from "react-icons/fa";
@@ -19,12 +10,6 @@ import { Link } from "react-router-dom";
 import SimilarProductSlider from "./SimilarProductSlider";
 import { useParams } from "react-router-dom"
 import axios from "axios"
-import styled from "styled-components"
-
-// const plusMinusButton = styled.button`
-  
-// `
-
 
 const SingleProduct = () => {
 
@@ -38,7 +23,7 @@ const SingleProduct = () => {
 
   useEffect(() => {
      axios
-      .get(`https://pharmeasy-backend.onrender.com/products/${id}`)
+      .get(`${process.env.BACKEND_URL}/products/${id}`)
       .then((res) => { setShowImg(res.data[0].img1);setProduct(res.data[0])})
       setQty(precart.length);
   }, []);
