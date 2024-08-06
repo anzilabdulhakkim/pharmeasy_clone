@@ -39,16 +39,19 @@ const Login = () => {
   };
 
   const handleClick = async () => {
-    if (!email.email || !/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(email.email)) {
+    if (!email.email || !/^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/.test(email.email)) {
       alert("Incorrect Email Id");
       setShow(true);
-    } else {
+    } 
+    else {
       setShow(false);
       try {
         const res = await axios.post(`${backendUrl}/sendOtp`, email);
         console.log(res);
-      } catch (error) {
+      } 
+      catch (error) {
         console.error("Error sending OTP:", error);
+        alert("Failed to send OTP. Please try again.");
       }
     }
   };
