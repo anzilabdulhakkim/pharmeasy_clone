@@ -1,4 +1,4 @@
-import React, { useRef, useState } from "react";
+import React, { useRef, useState, useEffect } from "react";
 import {
   Drawer,
   DrawerBody,
@@ -14,22 +14,16 @@ import {
   HStack,
   PinInput,
   PinInputField,
-  Text,
   Popover,
   PopoverTrigger,
   PopoverContent,
-  PopoverHeader,
-  PopoverArrow,
   PopoverBody,
-  PopoverCloseButton,
-  Box,
 } from "@chakra-ui/react";
 import axios from "axios";
-import { useEffect } from "react";
-import { Link } from "react-router-dom";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+
 const Login = () => {
-  const navigate =useNavigate();
+  const navigate = useNavigate();
   const { isOpen, onOpen, onClose } = useDisclosure();
   const btnRef = useRef();
   const [email, setEmail] = useState({ email: "" });
@@ -37,63 +31,71 @@ const Login = () => {
   const [otp, setOtp] = useState("");
   const [hello, setHello] = useState("Hello, Log in");
   const [changeComp, setChangeComp] = useState(true);
+  const backendUrl = process.env.BACKEND_URL;
 
   const handleChange = (e) => {
-    let { name, value } = e.target;
+    const { name, value } = e.target;
     setEmail({ ...email, [name]: value });
   };
 
   const handleClick = async () => {
-    if (email.email === "" || !/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(email.email)) {
-      alert("Incorrect Email Id")
+    if (!email.email || !/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(email.email)) {
+      alert("Incorrect Email Id");
       setShow(true);
     } else {
       setShow(false);
+      try {
+        const res = await axios.post(`${backendUrl}/sendOtp`, email);
+        console.log(res);
+      } catch (error) {
+        console.error("Error sending OTP:", error);
+      }
     }
-    let res = await axios.post("https://pharmeasy-backend.onrender.com/sendOtp", email);
-    console.log(res);
   };
 
   const handleOTP = (value) => {
-    setOtp(+value);
+    setOtp(value);
   };
 
   const Signup = async () => {
-    let res = await axios.post("https://pharmeasy-backend.onrender.com/verify", {
-      email: email.email,
-      otp: otp,
-    });
-    console.log("before res",res)
-    if ((res.data.msg = "Verified successfully")) {
-      console.log(res);
-      let signup = await axios.post("https://pharmeasy-backend.onrender.com/signup", {
-        email: email.email
+    try {
+      const res = await axios.post(`${backendUrl}/verify`, {
+        email: email.email,
+        otp: otp,
       });
-      console.log(signup);
-      if(signup.data[0].username!=undefined)
-      setHello(`Hello ${signup.data[0].username}`)
-      else
-      setHello(`Hello user`);
-      localStorage.setItem('userdetail',JSON.stringify(signup.data[0]));
-      onClose();
+      if (res.data.msg === "Verified successfully") {
+        const signup = await axios.post(`${backendUrl}/signup`, { email: email.email });
+        if (signup.data[0]?.username) {
+          setHello(`Hello ${signup.data[0].username}`);
+        } else {
+          setHello("Hello user");
+        }
+        localStorage.setItem('userdetail', JSON.stringify(signup.data[0]));
+        onClose();
+        setShow(true);
+        setChangeComp(false);
+      }
+    } catch (error) {
+      console.error("Error during signup:", error);
+    }
+  };
+
+  useEffect(() => {
+    const data = JSON.parse(localStorage.getItem('userdetail')) || { username: 'Log in' };
+    setHello(`Hello ${data.username || 'user'}`);
+    if (data.username !== 'Log in') {
       setShow(true);
       setChangeComp(false);
     }
-  };
- useEffect(()=>{
-  let data=JSON.parse(localStorage.getItem('userdetail'))||{username:'Log in'};
-  setHello(`Hello ${data.username||'user'}`);
-  if(data.username!='Log in'){
-    setShow(true);
-    setChangeComp(false);
-  }
- },[window.location.reload])
+  }, []);
+
   const logout = () => {
     setChangeComp(true);
-    setHello("Hello, Log in")
+    setHello("Hello, Log in");
     localStorage.removeItem('userdetail');
-    navigate('/')
-  }
+    navigate('/');
+  };
+
   return (
     <div>
       {changeComp ? (
@@ -103,10 +105,10 @@ const Login = () => {
             onClick={onOpen}
             variant="ghost"
             color="black"
-            _hover="none"
+            _hover={{ bg: "transparent" }}
             fontWeight="500"
             width="100px"
-            fontSize={"14px"}
+            fontSize="14px"
             colorScheme="gray"
           >
             {hello}
@@ -137,15 +139,14 @@ const Login = () => {
                   <DrawerHeader fontSize="16px" fontWeight="700">
                     Quick Login / Register
                   </DrawerHeader>
-
                   <DrawerBody>
                     <Stack gap="10px">
                       <Input
                         borderRadius="8px"
                         height="50px"
                         borderColor="#767676"
-                        _hover="none"
-                        type={"email"}
+                        _hover={{ borderColor: "#767676" }}
+                        type="email"
                         placeholder="Enter your email address"
                         onChange={handleChange}
                         name="email"
@@ -156,7 +157,7 @@ const Login = () => {
                         color="white"
                         fontWeight="700"
                         fontSize="15px"
-                        _hover="none"
+                        _hover={{ bg: "#2d6a4f" }}
                         onClick={handleClick}
                       >
                         Send OTP
@@ -176,25 +177,13 @@ const Login = () => {
                   <DrawerHeader fontSize="16px" fontWeight="700">
                     Enter OTP sent to {email.email}
                   </DrawerHeader>
-
                   <DrawerBody>
                     <Stack gap="10px">
-                      {/* <Input
-                    borderRadius="8px"
-                    height="50px"
-                    borderColor="#767676"
-                    _hover="none"
-                    type={"text"}
-                    placeholder="Enter your email address"
-                    onChange={handleChange}
-                    name="email"
-                  /> */}
-                      <HStack justifyContent={"space-between"}>
+                      <HStack justifyContent="space-between">
                         <PinInput
                           type="alphanumeric"
-                          size={"lg"}
-                          name="otp"
-                          onChange={(value) => handleOTP(value)}
+                          size="lg"
+                          onChange={handleOTP}
                           mask
                         >
                           <PinInputField />
@@ -209,7 +198,7 @@ const Login = () => {
                         color="white"
                         fontWeight="700"
                         fontSize="15px"
-                        _hover="none"
+                        _hover={{ bg: "#2d6a4f" }}
                         onClick={Signup}
                       >
                         Continue
@@ -233,10 +222,10 @@ const Login = () => {
           <Popover trigger="hover">
             <PopoverTrigger>
               <Button
-                marginLeft={"5px"}
-                variant={"link"}
+                marginLeft="5px"
+                variant="link"
                 fontSize="14px"
-                color={"gray.600"}
+                color="gray.600"
                 fontWeight="500"
               >
                 {hello}
@@ -247,7 +236,7 @@ const Login = () => {
                 <Button
                   colorScheme="gray"
                   variant="ghost"
-                  width={"100%"}
+                  width="100%"
                   justifyContent="flex-start"
                 >
                   My Orders
@@ -255,7 +244,7 @@ const Login = () => {
                 <Button
                   colorScheme="gray"
                   variant="ghost"
-                  width={"100%"}
+                  width="100%"
                   justifyContent="flex-start"
                 >
                   Refer & Earn
@@ -263,7 +252,7 @@ const Login = () => {
                 <Button
                   colorScheme="gray"
                   variant="ghost"
-                  width={"100%"}
+                  width="100%"
                   justifyContent="flex-start"
                 >
                   My Refills
@@ -271,24 +260,25 @@ const Login = () => {
                 <Button
                   colorScheme="gray"
                   variant="ghost"
-                  width={"100%"}
+                  width="100%"
                   justifyContent="flex-start"
                 >
                   Medical Records
                 </Button>
-              <Link to='/account'> <Button
-                  colorScheme="gray"
-                  variant="ghost"
-                  width={"100%"}
-                  justifyContent="flex-start"
-                >
-                  My Profile
-                </Button>
+                <Link to='/account'>
+                  <Button
+                    colorScheme="gray"
+                    variant="ghost"
+                    width="100%"
+                    justifyContent="flex-start"
+                  >
+                    My Profile
+                  </Button>
                 </Link>
                 <Button
                   colorScheme="gray"
                   variant="ghost"
-                  width={"100%"}
+                  width="100%"
                   justifyContent="flex-start"
                 >
                   Wallets
@@ -296,16 +286,16 @@ const Login = () => {
                 <Button
                   colorScheme="gray"
                   variant="ghost"
-                  width={"100%"}
+                  width="100%"
                   justifyContent="flex-start"
                 >
-                  Nofitications
+                  Notifications
                 </Button>
                 <Button
-                  fontWeight={"400"}
+                  fontWeight="400"
                   colorScheme="gray"
                   variant="ghost"
-                  width={"100%"}
+                  width="100%"
                   justifyContent="flex-start"
                   onClick={logout}
                 >

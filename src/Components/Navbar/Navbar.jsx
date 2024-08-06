@@ -42,10 +42,7 @@ const Navbar = () => {
           </div>
           <div className={styles.links2}>
             <div>
-              <a
-                href="https://apps.apple.com/in/app/pharmeasy-healthcare-app/id982432643"
-                target={"_blank"}
-              >
+              <a href="https://apps.apple.com/in/app/pharmeasy-healthcare-app/id982432643" target={"_blank"} rel="noreferrer" >
                 <Button backgroundColor={"#EEF4FE"} fontSize="14px">
                   <AiOutlineMobile
                     style={{ fontSize: "25px", marginRight: "10px" }}
