@@ -1,70 +1,49 @@
-# Getting Started with Create React App
+# Pharmeasy Clone
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
-## Available Scripts
+## Getting Started
 
-In the project directory, you can run:
+1. Fork this repository [https://github.com/anzilabdulhakkim/pharmeasy_clone](https://github.com/anzilabdulhakkim/pharmeasy_clone)
+2. Clone the Forked repository.
+   - **_Note_**: This Clone repository should be on your GitHub account.
+3. Install dependencies: `npm install`
+4. Start the development server: `npm start`
+5. To visit the app, open: **http://localhost:3000/**
 
-### `npm start`
+## Contributors
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+1. [@anzilabdulhakkim](https://github.com/anzilabdulhakkim)
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+## Project Details
 
-### `npm test`
+PharmEasy is a consumer healthcare website that provides consumers with on-demand, home-delivered access to a wide range of prescription, OTC pharmaceutical, other consumer healthcare products, comprehensive diagnostic test services, and teleconsultations thereby serving their healthcare needs.
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+## Tech Stack Used
 
-### `npm run build`
+- React
+- Node.js
+- Express.js
+- MongoDB
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+## Functionalities
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+- User can order medicines online.
+- Login verification with OTP sent to email.
+- Edit profile to save mobile number, username, and email address.
+- Search for products and sort them based on price.
+- View product details and add them to the cart.
+- Search location by entering pincode.
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+## Links
 
-### `npm run eject`
+- GitHub Repo: [https://github.com/anzilabdulhakkim/pharmeasy_clone](https://github.com/anzilabdulhakkim/pharmeasy_clone)
+- deployed Link: [https://pharmeasy-clone-web.vercel.app/](https://pharmeasy-clone-web.vercel.app)
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+## Show Your Support
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+Give a :star:️ if you like this project!
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+## Acknowledgments
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+We take all the responsibility for every single line of code. The design is inspired by **https://pharmeasy.in/**.
