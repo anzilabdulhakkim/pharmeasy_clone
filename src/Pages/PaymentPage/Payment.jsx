@@ -57,7 +57,6 @@ const Payment = () => {
   };
 
   const handleRadioChange = (e) => {
-    // console.log(e.target.checked);
     setChecked(!checked);
   };
 

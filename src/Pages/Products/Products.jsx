@@ -53,6 +53,7 @@ const Products = () => {
         setLoading(false);
       }
     };
+
     getData();
   }, [category]);
 
@@ -71,7 +72,6 @@ const Products = () => {
   useEffect(() => {
     setData(sortData);
   }, [change]);
-  
 
   return (
     <div>

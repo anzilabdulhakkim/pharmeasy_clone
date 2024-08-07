@@ -22,7 +22,7 @@ const DummyProducts = () => {
                 <h1>{_id}</h1>
                 <h1>{name}</h1>
                 <h3>{storename}</h3>
-                <img src = {img1} />
+                <img src = {img1}  alt='image1'/>
             </div>
             </Link> 
         })}
