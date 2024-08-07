@@ -32,7 +32,7 @@ const Payment = () => {
       id: 2,
       icon: "https://cdn.pharmeasy.in/payments/amazonpay_new.png",
       name: "Amazon Pay",
-      description: "",
+      description: "Receive a guaranteed cashback of Rs.50 and up to Rs.500 on orders of Rs.799 or more with Amazon Pay. Offer is valid for one-time use per user.",
     },
     {
       id: 3,
