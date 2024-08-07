@@ -10,7 +10,7 @@ import { MdAccountCircle } from "react-icons/md";
 import AppSection from '../Products/AppSection';
 import axios from "axios";
 
-const backendUrl = process.env.BACKEND_URL
+const backendUrl = process.env.REACT_APP_BACKEND_URL
 
 const Account = () => {
   const [updata, upsetdata] = useState(JSON.parse(localStorage.getItem('userdetail')) || {});

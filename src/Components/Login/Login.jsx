@@ -12,7 +12,7 @@ const Login = () => {
   const [otp, setOtp] = useState("");
   const [helloMessage, setHelloMessage] = useState("Hello, Log in");
   const [isLoggedIn, setIsLoggedIn] = useState(false);
-  const backendUrl = process.env.BACKEND_URL;
+  const backendUrl = process.env.REACT_APP_BACKEND_URL;
 
   const handleChange = (e) => {
     setEmail(e.target.value);

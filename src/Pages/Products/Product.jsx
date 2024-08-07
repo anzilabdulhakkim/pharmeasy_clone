@@ -23,7 +23,7 @@ const SingleProduct = () => {
 
   useEffect(() => {
      axios
-      .get(`${process.env.BACKEND_URL}/products/${id}`)
+      .get(`${process.env.REACT_APP_BACKEND_URL}/products/${id}`)
       .then((res) => { setShowImg(res.data[0].img1);setProduct(res.data[0])})
       setQty(precart.length);
   }, []);

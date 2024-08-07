@@ -28,7 +28,6 @@ const Products = () => {
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(false);
   const [sortData, setSortData] = useState([]);
-  const [change, setChange] = useState(true);
   const { category } = useParams();
 
   useEffect(() => {
@@ -37,36 +36,38 @@ const Products = () => {
 
   useEffect(() => {
     const getData = async () => {
+      console.log('Category:', category);
       setLoading(true);
-      let res = await axios.get(
-        `${process.env.BACKEND_URL}/products?category=${category}`
-      );
-      setData(res.data);
-      setLoading(false);
+      try {
+        let res = await axios.get(
+          `${process.env.REACT_APP_BACKEND_URL}/products?category=${category}`
+        );
+        setData(res.data);
+      } catch (error) {
+        console.error("Error fetching data:", error);
+      } finally {
+        setLoading(false);
+      }
     };
     getData();
-  }, []);
+  }, [category]);
 
   const handleSorting = (e) => {
     const { value } = e.target;
-    setChange(!change);
+    let sortedData = [...data];
     if (value === "asc") {
-      let asc = data.sort((a, b) => {
-        return a.offprice - b.offprice;
-      });
-      setSortData(asc);
+      sortedData.sort((a, b) => a.offprice - b.offprice);
     } else if (value === "des") {
-      let des = data.sort((a, b) => {
-        return b.offprice - a.offprice;
-      });
-      setSortData(des);
+      sortedData.sort((a, b) => b.offprice - a.offprice);
     }
+    setSortData(sortedData);
   };
 
   useEffect(() => {
-    setData(sortData);
-  }, [change]);
-
+    if (sortData.length > 0) {
+      setData(sortData);
+    }
+  }, [sortData]);
   
 
   return (

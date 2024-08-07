@@ -29,7 +29,7 @@ const  SimilarProductSlider = () => {
     
     useEffect(() => {
         axios
-            .get(`${process.env.BACKEND_URL}/products/`)
+            .get(`${process.env.REACT_APP_BACKEND_URL}/products/`)
             .then((res) => setProductData(res.data));
     }, []);
 

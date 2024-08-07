@@ -12,7 +12,7 @@ const Offers = () => {
   const [query, setQuery] = useState("");
   const [show, setShow] = useState(false);
   const [data, setData] = useState([]);
-  const backendUrl = process.env.BACKEND_URL;
+  const backendUrl = process.env.REACT_APP_BACKEND_URL;
 
   const handleChange = async (e) => {
     const value = e.target.value;
