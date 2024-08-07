@@ -1,4 +1,4 @@
-import { Box, Heading, Stack, Text } from "@chakra-ui/react";
+import { Box, Heading, Stack} from "@chakra-ui/react";
 import React from "react";
 import { useNavigate } from "react-router-dom";
 import styles from "../DayDeals/daydeals.module.css";
@@ -33,9 +33,6 @@ const Categories = () => {
             cursor="pointer"
             onClick={() => handleClick(el.heading)}
           >
-            <Text fontSize={"10px"} fontWeight="500" color={el.data==="**Contains Data" ? "green.400" : "red"}>
-              {el.data}
-            </Text>
             <Box
               className={styles.img}
               padding="24px 16px"
