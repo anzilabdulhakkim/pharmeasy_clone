@@ -13,7 +13,7 @@ const CartItem = ({ data, setdata }) => {
     const cartData = JSON.parse(localStorage.getItem("cartitem")) || [];
     const finalData = cartData.map((ele) => {
       if (ele._id === id) {
-        return { ...ele, qty: Math.max(Number(value), 1) }; // Ensure qty is at least 1
+        return { ...ele, qty: Math.max(Number(value), 1) }; 
       }
       return ele;
     });

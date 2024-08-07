@@ -28,6 +28,7 @@ const Products = () => {
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(false);
   const [sortData, setSortData] = useState([]);
+  const [change, setChange] = useState(true);
   const { category } = useParams();
 
   useEffect(() => {
@@ -36,13 +37,16 @@ const Products = () => {
 
   useEffect(() => {
     const getData = async () => {
-      console.log('Category:', category);
       setLoading(true);
+      const url = `${process.env.REACT_APP_BACKEND_URL}/products?category=${category}`;
+      console.log("Fetching URL:", url);
       try {
-        let res = await axios.get(
-          `${process.env.REACT_APP_BACKEND_URL}/products?category=${category}`
-        );
-        setData(res.data);
+        let res = await axios.get(url);
+        if (Array.isArray(res.data)) {
+          setData(res.data);
+        } else {
+          console.error("Expected an array but got:", res.data);
+        }
       } catch (error) {
         console.error("Error fetching data:", error);
       } finally {
@@ -54,20 +58,19 @@ const Products = () => {
 
   const handleSorting = (e) => {
     const { value } = e.target;
-    let sortedData = [...data];
+    setChange(!change);
     if (value === "asc") {
-      sortedData.sort((a, b) => a.offprice - b.offprice);
+      let asc = [...data].sort((a, b) => a.offprice - b.offprice);
+      setSortData(asc);
     } else if (value === "des") {
-      sortedData.sort((a, b) => b.offprice - a.offprice);
+      let des = [...data].sort((a, b) => b.offprice - a.offprice);
+      setSortData(des);
     }
-    setSortData(sortedData);
   };
 
   useEffect(() => {
-    if (sortData.length > 0) {
-      setData(sortData);
-    }
-  }, [sortData]);
+    setData(sortData);
+  }, [change]);
   
 
   return (

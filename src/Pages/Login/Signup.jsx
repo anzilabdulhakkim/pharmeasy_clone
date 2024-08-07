@@ -12,7 +12,7 @@ const Signup = () => {
         <p>Quick Login /Register</p>
       </div>
       <div className = {styles.entry}>
-        <input type="text" placeholder="Enter your Mobile NUmber" onChange={(e) => setMobNo(e.target.value)} />
+        <input type="text" placeholder="Enter your Mobile Number" onChange={(e) => setMobNo(e.target.value)} />
         <button className={styles.go}>Send OTP</button>
       </div>
       <div className={styles.foot}>

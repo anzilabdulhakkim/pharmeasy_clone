@@ -10,11 +10,11 @@ import { MdAccountCircle } from "react-icons/md";
 import AppSection from '../Products/AppSection';
 import axios from "axios";
 
-const backendUrl = process.env.REACT_APP_BACKEND_URL
 
 const Account = () => {
   const [updata, upsetdata] = useState(JSON.parse(localStorage.getItem('userdetail')) || {});
   const [userdata, setuserdata] = useState({ email: updata.email });
+  const backendUrl = process.env.REACT_APP_BACKEND_URL
 
   async function handlesave(event) {
     event.preventDefault();

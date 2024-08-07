@@ -57,7 +57,7 @@ const Navbar = () => {
             </div>
             <div className={styles.links2Icons}>
               <TbDiscount2 style={{ fontSize: "20px", marginRight: "10px" }} />
-              <a href="#offers" style={{ fontSize: "14px", fontWeight: "500" }}>
+              <a href="/#offers" style={{ fontSize: "14px", fontWeight: "500" }}>
                 Offers
               </a>
             </div>

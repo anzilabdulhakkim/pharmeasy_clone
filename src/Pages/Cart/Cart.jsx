@@ -16,9 +16,9 @@ const Cart = () => {
     JSON.parse(localStorage.getItem("cartitem")) || []
   );
 
-  const [localdata,setlocaldata]=useState({sprice:data.length == 0
+  const [localdata,setlocaldata]=useState({sprice:data.length === 0
     ? 0
-    : data.length == 1
+    : data.length === 1
     ? (data[0].price * data[0].qty).toFixed(2)
     : data
         .reduce((a, b) => a.price * a.qty + b.price * b.qty)
